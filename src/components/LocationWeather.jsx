@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import axios from "axios";
 import DateTime from "./dateTime";
@@ -11,7 +10,6 @@ const api_key = "449698db8add438098aca31048838cfb";
 
 function LocationWeather(props) {
 
-  const params = useParams();
   const [city,setCity] = useState("");
   const [ferTemp,setFerTemp] = useState(false);
 
@@ -19,7 +17,7 @@ function LocationWeather(props) {
     console.log("Fetching....");
     return axios
       .get(
-        `https://api.weatherbit.io/v2.0/current?city=${params.city}&key=${api_key}&include=minutely`
+        `https://api.weatherbit.io/v2.0/current?city=${props.city_name}&key=${api_key}&include=minutely`
       )
       .then((res) => res.data.data[0]);
   });
@@ -71,9 +69,9 @@ function LocationWeather(props) {
             placeholder="Search for any location..."
             onChange={(e)=>{setCity(e.target.value);}}
           />
-          <Link to={`/search-Weather/${city}`}>
+          <a href={`/search-Weather/${city}`}>
           <button className="px-5 p-2 bg-slate-300 rounded-xl" onClick={()=>{setTimeout(refetch,500);}}>Search</button>
-          </Link>
+          </a>
         </form>
         <button className="px-5 p-2 bg-slate-300 rounded-xl" onClick={(e)=>{
           setFerTemp(!ferTemp);
@@ -85,7 +83,7 @@ function LocationWeather(props) {
           Refresh Weather
         </button>
         <button className="px-5 p-2 bg-slate-300 rounded-xl font-bold">
-          <Link to="/">Back To Home</Link>
+          <a href="/">Back To Home</a>
         </button>
       </div>
     </>

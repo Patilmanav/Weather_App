@@ -2,14 +2,6 @@ import { useRef, useState, useEffect } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  RouterProvider,
-  Route,
-  Link,
-  Routes,
-  Await,
-} from "react-router-dom";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import Weather from "./components/Weather";
 import LocationWeather from "./components/LocationWeather";
@@ -28,6 +20,8 @@ function App() {
   const [error, setError] = useState(null);
   const [weatherData, setWeatherData] = useState("Click Me To Refresh");
   const locationBtn = useRef();
+  const [city_name,setCity_name] = useState("");
+  // const [searchLoc,setSearchLoc] = useState(false);
   
   useEffect(() => {
     if ("geolocation" in navigator) {
@@ -58,17 +52,13 @@ function App() {
   return (
     <>
       <QueryClientProvider client={client}>
-        <Router>
           <div className="relative min-h-screen" id="main">
             <div className="center flex flex-col justify-center items-center h-[100vh] py-5 overflow-y-auto">
               {/* <div className="h-52 m-5"> dnrkjlflrjkn</div> */}
-              <Routes>
-                <Route
-                  path="search-Weather/:city"
-                  element={<LocationWeather setLocalDate={setLocalDate} />}
-                />
-                <Route path="/" element={<Weather />} />
-              </Routes>
+
+              <Weather setLocalDate={setLocalDate} city_name={city_name} setCity_name={setCity_name}/>
+
+
             </div>
             <div className="hidden md:block top_left fixed top-0 left-0 m-7 drop-shadow-lg">
               <button
@@ -98,18 +88,17 @@ function App() {
                 </div>
 
                 <p className="font-semibold text-xl">Back to Home</p>
-                <Link to={`/`}>
+                <a href={`/`}>
                   <button className="h-14 w-14 rounded-[100%] bg-slate-100 drop-shadow-lg">
                     <div className="flex justify-center">
                       <img className="h-7" src={Home} alt="Home" />
                     </div>
                   </button>
-                </Link>
+                </a>
               </div>
               <div></div>
             </div>
           </div>
-        </Router>
       </QueryClientProvider>
     </>
   );

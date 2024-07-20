@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import LocationWeather from "./LocationWeather";
 
 function Weather(props) {
   const [cityName,setCityName] = useState("");
+  const [searchLoc,setSearchLoc] = useState(false);
+
+  if(searchLoc){
+    return <LocationWeather setLocalDate={props.setLocalDate} city_name={cityName} setSearchLoc={setSearchLoc}/>;
+  }
 
   return (
     <div className="rounded-lg bg-slate-100 bg-opacity-80 min-w-[30vmax]">
@@ -28,7 +34,7 @@ function Weather(props) {
           </h1>
         </a>
 
-        <form id="form" action={(cityName!="" && cityName!==null && cityName!=" ")&&`/search-Weather/${cityName}`} className="border-none flex flex-col justify-center items-center gap-5">
+        <div id="form" className="border-none flex flex-col justify-center items-center gap-5">
           <input
             type="text"
             id="search"
@@ -45,9 +51,15 @@ function Weather(props) {
               title="Simply press enter or this button to search"
               className="px-5 p-2 bg-slate-300 rounded-xl font-bold m-1 hover:cursor-pointer"
               value={`Search`}
+              onClick={()=>{
+                props.setCity_name(cityName);
+                console.log(props.setSearchLoc);
+                console.log("props.setSearchLoc");
+                setSearchLoc(true);
+              }}
             />
               
-        </form>
+        </div>
         <div className="text-center">
           <button
             id="toggle-temp"
