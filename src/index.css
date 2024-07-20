@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+#main{
+    background-image: url('./assets/clouds.jpg');
+    background-position: center;
+    background-size: cover;
+    /* object-position: center; */
+}
